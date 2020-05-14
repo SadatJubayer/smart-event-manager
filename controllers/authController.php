@@ -1,6 +1,4 @@
 <?php
-include '../models/session.php';
-Session::init();
 
 include '../models/database.php';
 
@@ -8,13 +6,7 @@ if (isset($_POST["login"])) {
     loginUser();
 }
 
-if (isset($_POST["register"])) {
-    registerUser();
-}
 
-if (isset($_POST["logout"])) {
-    logoutUser();
-}
 
 function loginUser()
 {
@@ -24,7 +16,7 @@ function loginUser()
 
     $db = new Database();
 
-    $sql = "SELECT * FROM users WHERE email = '$email' and password = '$password'";
+    $sql = "SELECT * FROM users WHERE email='$email' and password='$password'";
 
     $result = $db->select($sql);
 
@@ -32,10 +24,13 @@ function loginUser()
         $value = mysqli_fetch_array($result);
         $rows = mysqli_num_fields($result);
         if ($rows > 0) {
-            Session::set('login', true);
-            Session::set('userId', $value['id']);
 
-            Session::set('name', $value['firstName']);
+
+
+            setcookie('login', $value['true'], time() + (86400 * 30), "/");
+            setcookie('userId', $value['id'], time() + (86400 * 30), "/");
+            setcookie('name', $value['firstName'], time() + (86400 * 30), "/");
+
 
             if ($value['role'] == 'admin') {
 
@@ -48,8 +43,7 @@ function loginUser()
             }
 
             if ($value['role'] == 'user') {
-
-                header('Location:../views/home.php');
+              header('Location:../views/userProfile.php');
             }
         }
 
@@ -60,22 +54,24 @@ function loginUser()
     }
 
 }
-
-function registerUser()
+function registerUser($fName, $lName, $email, $password, $gender, $role )
 {
-    header('Location:../views/home.php');
 
+    $db = new Database();
+
+    $sql = "INSERT INTO users VALUES (NULL, '$role', '$fName', '$lName', '$email', '$password', '$gender', 1 , NULL)";
+
+    $inserted = $db->insert($sql);
+
+    if($inserted) {
+        header('Location:../views/login.php?success=1');
+    }
 }
+
+
 
 function logoutUser()
 {
     header('Location:../views/home.php');
 }
 
-function isAuthenticated()
-{
-    if (Session::get('login') === false) {
-        header('Location:../views/login.php');
-    }
-    return true;
-}

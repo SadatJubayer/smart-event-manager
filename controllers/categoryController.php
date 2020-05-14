@@ -16,6 +16,19 @@ function getAllCategories()
     return $categories;
 }
 
+function getCategoryName($id) {
+    $query = "SELECT * FROM categories WHERE id=$id";
+    $db = new Database();
+    $category = $db->select($query);
+    if($category) {
+        $name = '';
+        while ($result = $category->fetch_assoc()){
+            $name = $result['name'];
+        }
+        return $name;
+    }
+}
+
 function getCategory($id)
 {
     $query = "SELECT * FROM categories WHERE id=$id";
