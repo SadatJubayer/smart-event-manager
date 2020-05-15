@@ -11,11 +11,14 @@ $events = getAllEvents();
     <div class="row">
         <div class="col s12">
             <div class="row">
-                <div class="input-field col s12">
+                <div class="input-field col s12" style="position: relative">
                     <i class="material-icons prefix">textsms</i>
-                    <input type="text" id="autocomplete-input" class="autocomplete">
+                    <input name="searchText" id="search" type="text" id="autocomplete-input" class="autocomplete">
                     <label for="autocomplete-input">Search Events</label>
                 </div>
+<!--                <div id="search-result" style="position: absolute; top: 20%; left: 10%;  list-style: none">-->
+<!--                    <a  class="flow-text" href=""><li>Hello</li></a>-->
+<!--                </div>-->
             </div>
         </div>
     </div>
@@ -34,7 +37,7 @@ foreach ($events as $product) {
     echo '<div class="card">';
     echo '<div class="card-image">';
     echo '<img src="../uploads/' . $product["image"] . '" alt="' . $product["title"] . '">';
-    echo ' <span class="card-title red-text">' . $product["title"] . '</span>';
+    echo ' <span class="card-title">' . $product["title"] . '</span>';
     echo ' </div>';
     echo ' <div class="card-content">';
     echo ' <p> ' . $product["description"] . '.';
@@ -60,6 +63,47 @@ foreach ($events as $product) {
             </ul>
         </div>
 </section>
+
+
+    <script>
+
+
+        $(document).ready(function(){
+            $('input.autocomplete').autocomplete({
+                data: {
+                    "Quam ad quia ut beat": null,
+                    "dftgdzsdf": null,
+                    "Quam ad quia ut beat": 'https://placehold.it/250x250'
+                },
+            });
+        });
+
+        const search = document.getElementById('search');
+        const searchResult = document.getElementById('search-result');
+        search.addEventListener('keyup', ()=> {
+            const searchText = search.value;
+
+            if(searchText !== '') {
+                $.ajax({
+                    url: '../controllers/searchController.php',
+                    method: 'POST',
+                    data: {query: searchText},
+                    success: function (response) {
+                        searchResult.innerHTML = response;
+                    }
+                })
+            }
+            else {
+                searchResult.innerHTML = '';
+            }
+
+        })
+
+
+
+
+
+    </script>
 
 
 <?php include './common/footer.php';?>

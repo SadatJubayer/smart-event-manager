@@ -33,7 +33,6 @@ var instance = M.Tabs.init(tabs);
 var currYear = new Date().getFullYear();
 
 $(document).ready(function () {
-  console.log("Test");
   $(".datepicker").datepicker({
     defaultDate: new Date(currYear - 5, 1, 31),
     // setDefaultDate: new Date(2000,01,31),
@@ -42,3 +41,6 @@ $(document).ready(function () {
     format: "yyyy/mm/dd",
   });
 });
+
+
+

@@ -1,3 +1,27 @@
+<?php
+session_start();
+
+
+if (isset($_POST["logout"])) {
+
+    setcookie('login', '', time() - 3600,  "/");
+    setcookie('userId', NULL , time() - 3600,  "/");
+    setcookie('name', '', time() - 3600,  "/");
+//    echo "<h1>Logiut Here</h1>";
+    header('Location:../views/login.php');
+}
+
+
+$isAuth = '';
+
+if(isset($_COOKIE['userId'])) {
+    $isAuth = $_COOKIE['userId'];
+}
+
+
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -22,6 +46,7 @@
     <header>
         <nav class="nav-wrapper teal darken-2">
             <div class="container">
+                <form action="#" method="POST">
                 <a href="home.php" class="brand-logo">Smart Event Manager</a>
                 <a href="#" class="sidenav-trigger" data-target="mobile-menu">
                     <i class="material-icons">menu</i>
@@ -31,14 +56,18 @@
                     <li><a href="events.php">Events</a></li>
                     <li><a href="gallery.php">Gallery</a></li>
                     <li><a href="#contact">Contact</a></li>
-                    <li><a href="signup.php" class="btn-small black-text teal lighten-5" data-position="bottom"
+                    <li><a href="signup.php" class="btn-small black-text teal lighten-5 <?php  echo $isAuth ? 'hide': ''  ?>" data-position="bottom"
                             data-tooltip="Instagram">
                             SIGN UP
                         </a></li>
-                    <li><a href="login.php" class="btn-small purple darken-1" data-position="bottom"
+                    <li><a href="login.php" class="btn-small purple darken-1 <?php  echo $isAuth  ? 'hide': ''  ?>" data-position="bottom"
                             data-tooltip="Facebook">
                             LOG IN
                         </a></li>
+                    <li><button type="submit" name="logout" class="btn-small red darken-1 <?php  echo $isAuth ? '' : 'hide'  ?>" data-position="bottom"
+                           data-tooltip="Facebook">
+                            Logout
+                        </button></li>
 
                 </ul>
                 <ul class="sidenav grey lighten-2" id="mobile-menu">
@@ -47,6 +76,7 @@
                     <li><a href="gallery.php">Gallery</a></li>
                     <li><a href="contact.php">Contact</a></li>
                 </ul>
+                </form>
             </div>
         </nav>
 

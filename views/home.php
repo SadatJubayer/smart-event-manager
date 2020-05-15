@@ -1,4 +1,9 @@
-<?php include './common/header.php';?>
+<?php include './common/header.php';
+
+include '../controllers/eventController.php';
+$events = getAllEvents();
+
+?>
 
 
 <!-- Slider  -->
@@ -59,48 +64,32 @@
         <div class="row">
             <h4 class="center">
                 <span class="teal-text">Popular</span> Events</h4>
-            <div class="col s12 m4">
-                <div class="card">
-                    <div class="card-image">
-                        <img src="https://image.ibb.co/hbEMux/resort1.jpg" alt="">
-                        <span class="card-title">Cancun, Mexico</span>
-                    </div>
-                    <div class="card-content">
-                        <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Voluptas aliquid fugiat corporis
-                            laudantium, architecto
-                            delectus?
-                        </p>
-                    </div>
-                </div>
-            </div>
-            <div class="col s12 m4">
-                <div class="card">
-                    <div class="card-image">
-                        <img src="https://image.ibb.co/mn1egc/resort2.jpg" alt="">
-                        <span class="card-title">The Bahamas</span>
-                    </div>
-                    <div class="card-content">
-                        <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Voluptas aliquid fugiat corporis
-                            laudantium, architecto
-                            delectus?
-                        </p>
-                    </div>
-                </div>
-            </div>
-            <div class="col s12 m4">
-                <div class="card">
-                    <div class="card-image">
-                        <img src="https://image.ibb.co/mbCVnH/resort3.jpg" alt="">
-                        <span class="card-title">Nova Scotia</span>
-                    </div>
-                    <div class="card-content">
-                        <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Voluptas aliquid fugiat corporis
-                            laudantium, architecto
-                            delectus?
-                        </p>
-                    </div>
-                </div>
-            </div>
+
+
+           <?php  $i = 0;
+
+
+           foreach ($events as $event) {
+
+               $i++;
+               if($i ==12) break;
+
+            echo '<a href=./event.php?id='. $event["id"].'>';
+            echo '<div class="col s12 m3">';
+                echo '<div class="card">';
+                    echo '<div class="card-image">';
+                        echo '<img src="../uploads/' . $event["image"] . '" alt="' . $event["title"] . '">';
+                        echo ' <span class="card-title">' . $event["title"] . '</span>';
+                        echo ' </div>';
+                    echo ' <div class="card-content">';
+                        echo ' <p> ' . $event["description"] . '.';
+                            echo ' </div>';
+                    echo ' </div>';
+                echo ' </div>';
+            echo '</a>';
+
+            }
+            ?>
         </div>
         <div class="row">
             <div class="col s12 center">

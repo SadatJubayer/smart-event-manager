@@ -1,4 +1,10 @@
-<?php include './common/header.php';?>
+<?php include './common/header.php';
+$success = '';
+if(isset($_GET['success'])) {
+    $success = 'Registration successful! You can now Login';
+}
+
+?>
 
 
 
@@ -19,6 +25,9 @@ main {
 
 <div class="valign-wrapper row login-box">
     <div class="col card hoverable s10 pull-s1 m6 pull-m3 l4 pull-l4">
+        <div class="green-text center bold" style="margin-top: 15px">
+            <?php echo $success ?>
+        </div>
         <form method='POST' action='../controllers/authController.php'>
             <div class="card-content">
                 <span class="card-title">Enter credentials</span>
@@ -29,7 +38,7 @@ main {
                     </div>
                     <div class="input-field col s12">
                         <label for="password">Password </label>
-                        <input type="text" class="validate" name="password" id="password" />
+                        <input type="password" class="validate" name="password" id="password" />
                     </div>
 
                     <div class="row text-center">

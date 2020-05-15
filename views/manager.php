@@ -54,12 +54,23 @@
 
                     <div class="row">
                         <div class="col s6">
+                            <label for="price">Ticket Price</label>
+                            <input type="number" class="validate" name="price" id="price"/>
+                        </div>
+                        <div class="col s6">
+                            <label for="seats">Total Seats</label>
+                            <input type="number" class="validate" name="total" id="seats"/>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col s6">
                             <label for="from">From</label>
-                            <input type="date" class="datepicker" name="from" id="startfrom"/>
+                            <input type="date"  name="from" id="from"/>
                         </div>
                         <div class="col s6">
                             <label for="to">To</label>
-                            <input type="date" class="datepicker" name="to" id="to"/>
+                            <input type="date"  name="to" id="to"/>
                         </div>
                     </div>
 
